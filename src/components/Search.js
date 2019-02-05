@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Axios from "axios";
 import BookResultList from "./BookResultList";
 
 const goodReadApiKey = '1QuOnDaZDKNfSKf09AjA';
-let fileReader;
 
 class Search extends React.Component {
 	
@@ -24,43 +24,41 @@ class Search extends React.Component {
 	
 	onSearchButtonClick(e) {
 		this.setState({ fetching: true });
-		//this.getResponseFromFile();
-		const requestUri =
-      `https://goodreads-react-demo.herokuapp.com/` +
-      `https://www.goodreads.com/search/index.xml?key=${goodReadApiKey}&q=${this.state.searchText}`;
-	    fetch(requestUri)
-		.then(
-			(result) => {
-			  this.setState({fetching: false});
-			  this.parseXMLResponse(result);
-			  //this.getResponseFromFile();
-			},
-			(error) => {
-			  this.setState({fetching: false,error:error});
-			}
-		)
+		 const requestUri =
+		  `https://cors-anywhere.herokuapp.com/` +
+		  `https://www.goodreads.com/search/index.xml?key=${goodReadApiKey}&q=${this.state.searchText}`;
+
+		Axios.get(requestUri)
+		  .then(res => {
+			this.parseXMLResponse(res.data);
+		  })
+		  .catch(error => {
+			this.setState({
+			  error: error.toString(),
+			  fetching: false
+			});
+		  });
 	}
 	
 	 // parse string xml received from goodreads api
-	 parseXMLResponse(response) {
-		 //console.log("parseXMLResponse:"+this)
-		 //let response = fileReader.result
-		console.log("response:"+response);
-		const parser = new DOMParser();
-		const XMLResponse = parser.parseFromString(response, "application/xml");
-        const XMLresults = new Array(...XMLResponse.getElementsByTagName("work"));
-		//console.log("XMLresults:"+XMLresults[0]);
-		const searchResults = XMLresults.map(result => this.XMLToJson(result));
-		this.setState({ fetching: false }, () => {
-			this.props.setResults(searchResults);
-		  });
-	 }
-	getResponseFromFile(file) {
-		console.log("file response");
-		fileReader = new FileReader()
-		fileReader.onloadend = this.parseXMLResponse;
-		fileReader.readAsText(file);
-	}
+	 parseXMLResponse (response) {
+    const parser = new DOMParser();
+    const XMLResponse = parser.parseFromString(response, "application/xml");
+    const parseError = XMLResponse.getElementsByTagName("parsererror");
+
+    if (parseError.length) {
+      this.setState({
+        error: "There was an error fetching results.",
+        fetching: false
+      });
+    } else {
+      const XMLresults = new Array(...XMLResponse.getElementsByTagName("work"));
+      const searchResults = XMLresults.map(result => this.XMLToJson(result));
+      this.setState({ fetching: false }, () => {
+        this.props.setResults(searchResults);
+      });
+    }
+	};
 	
 	XMLToJson(XML) {
 		const allNodes = new Array(...XML.children);
@@ -93,8 +91,7 @@ class Search extends React.Component {
 			  >
 				Search
 			  </button>
-			  <input type="file" onChange={ e => this.getResponseFromFile(e.target.files[0])} />
-			</div>
+			 </div>
 			
 		
          {this.state.fetching ? (
@@ -114,10 +111,5 @@ class Search extends React.Component {
 	}
 	
 }
-
-Search.propTypes = {
-  results: PropTypes.array,
-  setResults: PropTypes.func,
-};
 
 export default Search;
