@@ -26,7 +26,7 @@ class Search extends React.Component {
 		this.setState({ fetching: true });
 		//this.getResponseFromFile();
 		const requestUri =
-      `https://cors-anywhere.herokuapp.com/` +
+      `https://goodreads-react-demo.herokuapp.com/` +
       `https://www.goodreads.com/search/index.xml?key=${goodReadApiKey}&q=${this.state.searchText}`;
 	    fetch(requestUri)
 		.then(
@@ -45,7 +45,7 @@ class Search extends React.Component {
 	 parseXMLResponse(response) {
 		 //console.log("parseXMLResponse:"+this)
 		 //let response = fileReader.result
-		//console.log("response:"+response);
+		console.log("response:"+response);
 		const parser = new DOMParser();
 		const XMLResponse = parser.parseFromString(response, "application/xml");
         const XMLresults = new Array(...XMLResponse.getElementsByTagName("work"));
