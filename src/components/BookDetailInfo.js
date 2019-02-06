@@ -8,7 +8,6 @@ class BookDetailInfo extends React.Component {
 	
 	constructor(props) {
 		super(props);
-		console.log("BookDetailInfo :"+this.props.bookData.best_book.id)
 		this.state = {
 		  description: "loading..",
 		  error: ""

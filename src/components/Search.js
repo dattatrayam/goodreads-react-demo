@@ -82,10 +82,12 @@ class Search extends React.Component {
 				type="text"
 				placeholder="Search Books by name"
 				name="searchText"
+				id="searchText"
 				onChange={ this.onSearchTextChange }
 				value={this.state.searchText}
 			  />
 			  <button
+				id="searchBtn"
 				 className="col-sm-2 btn btn-primary"
 				onClick={ this.onSearchButtonClick}
 			  >

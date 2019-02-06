@@ -14,29 +14,18 @@ it('renders without crashing', () => {
   shallow(<Search />);
 });
 
-
-it('renders without crashing', () => {
-  shallow(<BookResultList />);
+it("when search input changed", () => {
+    const componentWrapper = shallow(<Search />);
+    componentWrapper.find('#searchText').simulate('change', {target: {value: 'Testing'}});
+    expect(componentWrapper.state('searchText')).toEqual('Testing');
+ 
 });
 
-it('renders without crashing', () => {
-  shallow(<BookDetailInfo />);
-});
-it('renders without crashing', () => {
-  shallow(<BookDashCard />);
-});
-
-
-it('Search component renders BookResultList component', () => {
-  let results = Array(10).fill(null)
-   const wrapper = shallow(<Search results={results}/>);
-   expect(wrapper.find(BookResultList)).to.have.lengthOf(1);
+it("when search button clicked", () => {
+    const componentWrapper = shallow(<Search />);
+    componentWrapper.find('#searchText').simulate('change', {target: {value: 'Testing'}});
+	componentWrapper.find('#searchBtn').simulate('click');
+    expect(componentWrapper.state('fetching')).toEqual(true);
+ 
 });
 
-
-
-it('BookResultList component renders ten BookDashCard components', () => {
-  let books = Array(10).fill(null)
-  const wrapper = shallow(<BookResultList books={books}/>);
-  expect(wrapper.find(BookDashCard)).to.have.lengthOf(10);
-});
