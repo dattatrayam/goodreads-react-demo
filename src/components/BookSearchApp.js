@@ -13,6 +13,9 @@ class BookSearchApp extends React.Component {
 		this.openBookDetails = this.openBookDetails.bind(this);
 	}
 	
+	componentDidMount(){
+		document.title = "React Goodreads Book Search";
+	}
 	setResults(results) {
 		console.log("results:"+results);
 	  this.setState({ results:results });
