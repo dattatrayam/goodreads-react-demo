@@ -32,6 +32,7 @@ This project was bootstrapped with `create-react-app` and deployed live at https
 2. See the detail view of book by clicking on each result.
 
 # Future Implementation:
-I want to implement below things in the future version:
-1. Display top 5 postive reviews and top 5 negative reviews by using text symantic analysis.
+I want to add below things in the future version:
+1. Add more test cases
+2. Display top 5 postive reviews and top 5 negative reviews by using text symantic analysis.
 2. Book recommendation engine 
