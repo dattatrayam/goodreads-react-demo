@@ -2,7 +2,7 @@
 
 This application is developed using React and goodreads api to search books by name
 
-This project was bootstrapped with `create-react-app` and deployed live at https://dashboard.heroku.com/apps/goodreads-react-demo
+This project was bootstrapped with `create-react-app` and deployed live at https://goodreads-react-demo.herokuapp.com/
 
 # Running application locally
 
