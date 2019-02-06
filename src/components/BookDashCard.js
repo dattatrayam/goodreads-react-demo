@@ -7,7 +7,7 @@ function BookDashCard(props) {
         <img
           className="card-img-top pl-2 pr-2 pt-2"
           src={props.bookData.best_book.image_url}
-          alt="Book cover"
+          alt="cover"
           height="200px"
         />
         <div className="card-body">

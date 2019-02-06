@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import Axios from "axios";
 import BookResultList from "./BookResultList";
 
@@ -23,7 +22,9 @@ class Search extends React.Component {
 	}
 	
 	onSearchButtonClick(e) {
-		this.setState({ fetching: true });
+		this.setState({ fetching: true});
+		this.setState({ error: ''});
+		
 		 const requestUri =
 		  `https://cors-anywhere.herokuapp.com/` +
 		  `https://www.goodreads.com/search/index.xml?key=${goodReadApiKey}&q=${this.state.searchText}`;
@@ -40,8 +41,7 @@ class Search extends React.Component {
 		  });
 	}
 	
-	 // parse string xml received from goodreads api
-	 parseXMLResponse (response) {
+	parseXMLResponse (response) {
     const parser = new DOMParser();
     const XMLResponse = parser.parseFromString(response, "application/xml");
     const parseError = XMLResponse.getElementsByTagName("parsererror");
@@ -80,7 +80,7 @@ class Search extends React.Component {
 			  <input
 				className="mr-1 col-sm-9 form-control"
 				type="text"
-				placeholder="Search Books"
+				placeholder="Search Books by name"
 				name="searchText"
 				onChange={ this.onSearchTextChange }
 				value={this.state.searchText}

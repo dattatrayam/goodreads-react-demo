@@ -34,6 +34,7 @@ class BookSearchApp extends React.Component {
 				<div className="container-body">
 					 <div className="header">
 					 <h3>Goodreads React Book Search Demo</h3>
+					 <br/>
 					 </div>
 					 
 					 <div className="bookList">
